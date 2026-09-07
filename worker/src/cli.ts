@@ -105,7 +105,8 @@ async function main() {
       const { importSubject } = await import('./import.js');
       const [address] = positional;
       if (!address) throw new Error('import <address>');
-      await importSubject(address, (e) => log(JSON.stringify(e)));
+      const from = flag('from') ? Number(flag('from')) : undefined;
+      await importSubject(address, (e) => log(JSON.stringify(e, (_, v) => (typeof v === 'bigint' ? v.toString() : v))), { fromBlock: from });
       break;
     }
     case 'seed': {

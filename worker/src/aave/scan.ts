@@ -7,7 +7,7 @@ export interface QualifyingTx {
   events: EventName[];
 }
 
-const RANGE = 5000; // publicnode caps eth_getLogs ranges; keep chunks modest
+const RANGE = 50_000; // publicnode accepts 50k-block eth_getLogs ranges for a filtered query (200k fails)
 
 function topicFor(address: string): string {
   return ethers.zeroPadValue(ethers.getAddress(address), 32);
@@ -34,13 +34,18 @@ export async function scanSubject(
     { name: 'LiquidationCall', topics: [EVENT_SIGS.LiquidationCall, null, null, t] },
   ];
   const found = new Map<string, QualifyingTx>();
-  for (let from = start; from <= head; from += RANGE) {
-    const to = Math.min(from + RANGE - 1, head);
+  let range = RANGE;
+  for (let from = start; from <= head; from += range) {
+    const to = Math.min(from + range - 1, head);
     onProgress?.(from, to);
     for (const f of filters) {
-      const logs = await withRetry(() =>
-        sepolia.getLogs({ address: AAVE.POOL, topics: f.topics, fromBlock: from, toBlock: to }),
-      );
+      let logs;
+      try {
+        logs = await withRetry(() => sepolia.getLogs({ address: AAVE.POOL, topics: f.topics, fromBlock: from, toBlock: to }), 2);
+      } catch (e) {
+        if (range > 5000) { range = Math.floor(range / 2); from -= range * 2; break; } // shrink the window and redo this span
+        throw e;
+      }
       for (const l of logs) {
         const e = found.get(l.transactionHash) ?? { txHash: l.transactionHash, block: l.blockNumber, events: [] };
         if (!e.events.includes(f.name)) e.events.push(f.name);

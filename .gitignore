@@ -1,0 +1,18 @@
+# secrets
+.env
+.env.*
+!.env.example
+# private spec
+ATTESTCREDIT_SPEC.md
+# deps / build
+node_modules/
+**/node_modules/
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+web/.next/
+web/out/
+*.log
+.DS_Store
+worker/dist/
+deck/*.pdf

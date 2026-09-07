@@ -1,0 +1,34 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib", "node_modules"]
+test = "test"
+script = "script"
+solc_version = "0.8.30"
+evm_version = "shanghai"
+optimizer = true
+optimizer_runs = 200
+# ASCBase + EvmV1Decoder hit "stack too deep" without via_ir (same as the official examples).
+via_ir = true
+fs_permissions = [{ access = "read-write", path = "./" }, { access = "read", path = "../deployments" }, { access = "write", path = "../deployments" }]
+allow_paths = ["node_modules", "../deployments"]
+remappings = [
+  "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+  "@gluwa/=node_modules/@gluwa/",
+  "forge-std/=lib/forge-std/src/",
+]
+
+[fmt]
+line_length = 120
+tab_width = 4
+bracket_spacing = false
+int_types = "long"
+quote_style = "double"
+number_underscore = "thousands"
+
+[lint]
+lint_on_build = false
+
+[rpc_endpoints]
+cc3 = "${CC3_RPC_URL}"
+sepolia = "${SEPOLIA_RPC_URL}"

@@ -1,0 +1,15 @@
+{
+  "name": "attestcredit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The cross-chain credit bureau on Creditcoin, powered by the Attestcoin Protocol.",
+  "license": "MIT",
+  "packageManager": "pnpm@10.14.0",
+  "scripts": {
+    "build:contracts": "forge build --root contracts",
+    "test:contracts": "forge test --root contracts",
+    "fmt:contracts": "forge fmt --root contracts",
+    "worker": "pnpm --filter @attestcredit/worker cli",
+    "web": "pnpm --filter @attestcredit/web dev"
+  }
+}

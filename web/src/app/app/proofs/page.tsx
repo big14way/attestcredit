@@ -1,13 +1,15 @@
 'use client';
-import { useAccount } from 'wagmi';
+import { Suspense } from 'react';
+import { useSubject } from '@/hooks/useSubject';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useProfile } from '@/hooks/useProfile';
 import { FactsTable } from '@/components/FactsTable';
 import { Card, Empty } from '@/components/ui';
 import { useCc3TxByQuery } from '@/hooks/useCc3Txs';
 
-export default function Proofs() {
-  const { address, isConnected } = useAccount();
+function Proofs() {
+  const { subject: address, isConnected: connected, viewingAs } = useSubject();
+  const isConnected = connected || viewingAs;
   const p = useProfile(address);
   const txByQuery = useCc3TxByQuery(address, p.pulse);
 
@@ -25,5 +27,13 @@ export default function Proofs() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ProofsPage() {
+  return (
+    <Suspense fallback={null}>
+      <Proofs />
+    </Suspense>
   );
 }

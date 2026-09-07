@@ -1,6 +1,7 @@
 'use client';
-import { useState } from 'react';
-import { useAccount, useReadContracts, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { Suspense, useState } from 'react';
+import { useReadContracts, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useSubject } from '@/hooks/useSubject';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { formatEther, formatUnits, parseEther, parseUnits } from 'viem';
 import { useProfile } from '@/hooks/useProfile';
@@ -11,8 +12,9 @@ import { tierColor, tierName } from '@/lib/format';
 
 const TIERS = [['Bronze', 40, 18], ['Silver', 55, 12], ['Gold', 70, 8], ['Platinum', 80, 5]] as const;
 
-export default function Lender() {
-  const { address, isConnected } = useAccount();
+function Lender() {
+  const { subject: address, isConnected: connected, viewingAs } = useSubject();
+  const isConnected = connected || viewingAs;
   const p = useProfile(address);
   const q = useReadContracts({
     contracts: address
@@ -103,7 +105,7 @@ export default function Lender() {
                   <label className="block">Borrow (TUSD) · max {maxBorrow.toFixed(2)}
                     <input className="mt-1 w-full rounded-lg border border-line bg-raised px-3 py-2 font-mono" value={amt} onChange={(e) => setAmt(e.target.value)} inputMode="decimal" required pattern="[0-9.]+" />
                   </label>
-                  <Button type="submit" disabled={!offer || isPending || Number(amt) > maxBorrow || Number(amt) <= 0}>Borrow at {apr}% APR</Button>
+                  <Button type="submit" disabled={viewingAs || !offer || isPending || Number(amt) > maxBorrow || Number(amt) <= 0}>Borrow at {apr}% APR</Button>
                 </form>
               )}
               {hash && <p className="mt-3 text-xs"><HashLink href={explorer.cc3Tx(hash)} label={`tx ${hash.slice(0, 10)}…`} /> {rcpt.isLoading ? '· pending' : rcpt.isSuccess ? '· confirmed' : ''}</p>}
@@ -116,5 +118,13 @@ export default function Lender() {
         <p className="mt-6 text-sm text-fg-2">Native repayments recorded for you: <span className="font-mono text-fg">{p.profile.nativeRepayCount}</span> · score <span className="font-mono text-fg">{p.score}</span> ({p.tier !== undefined && tierName(p.tier)})</p>
       )}
     </div>
+  );
+}
+
+export default function LenderPage() {
+  return (
+    <Suspense fallback={null}>
+      <Lender />
+    </Suspense>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
-import { useAccount } from 'wagmi';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { useSubject } from '@/hooks/useSubject';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { ArrowsClockwise, Sparkle } from '@phosphor-icons/react';
 import { useProfile } from '@/hooks/useProfile';
@@ -14,8 +14,9 @@ import { isDeployed, addresses } from '@/lib/contracts';
 import { explorer } from '@/lib/chains';
 import { usd6 } from '@/lib/format';
 
-export default function Dashboard() {
-  const { address, isConnected } = useAccount();
+function Dashboard() {
+  const { subject: address, isConnected: connected, viewingAs } = useSubject();
+  const isConnected = connected || viewingAs;
   const p = useProfile(address);
   const [job, setJob] = useState<Job | null>(null);
   const [err, setErr] = useState<string | null>(null);
@@ -65,6 +66,7 @@ export default function Dashboard() {
         )}
       </header>
 
+      {viewingAs && <p className="mt-6 rounded-xl border border-line bg-raised p-4 text-sm text-fg-2">Viewing as <span className="font-mono text-fg">{address}</span> · read only. Anyone can import proofs for any address; only the subject can mint its passport.</p>}
       {!isDeployed && <p className="mt-6 rounded-xl border border-line bg-warm p-4 text-sm text-fg-2">Contracts are not deployed yet on CC3 testnet. See the README quickstart.</p>}
       {health === null && <p className="mt-6 rounded-xl border border-line bg-warm p-4 text-sm text-fg-2">The proof worker is offline, so imports are disabled. Run <code className="font-mono">pnpm --filter @attestcredit/worker server</code>. On chain data still loads.</p>}
       {err && <p className="mt-6 rounded-xl border border-bronze/40 bg-warm p-4 text-sm text-bronze">{err}</p>}
@@ -120,5 +122,13 @@ export default function Dashboard() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={null}>
+      <Dashboard />
+    </Suspense>
   );
 }

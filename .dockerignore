@@ -1,0 +1,12 @@
+**/node_modules
+web/*
+!web/package.json
+contracts/out
+contracts/cache
+contracts/lib
+contracts/test
+.git
+.env
+ATTESTCREDIT_SPEC.md
+deck
+docs

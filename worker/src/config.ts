@@ -60,7 +60,7 @@ export const config = {
   privateKey: (): string => env('PRIVATE_KEY'),
   bureauAddress: (): string => process.env.CREDIT_BUREAU_ASC_ADDRESS || loadDeployments()?.creditBureauASC || '',
   ledgerAddress: (): string => process.env.CREDIT_LEDGER_ADDRESS || loadDeployments()?.creditLedger || '',
-  workerPort: Number(env('WORKER_PORT', '8787')),
+  workerPort: Number(process.env.PORT ?? env('WORKER_PORT', '8787')),
   webOrigin: env('WEB_ORIGIN', 'http://localhost:3000'),
   fixturesDir: path.join(REPO_ROOT, 'contracts', 'test', 'fixtures'),
 };

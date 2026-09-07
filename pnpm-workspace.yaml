@@ -2,3 +2,4 @@ packages:
   - contracts
   - worker
   - web
+  - video

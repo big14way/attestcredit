@@ -9,7 +9,7 @@ import { PassportCard } from '@/components/PassportCard';
 import { Card, Empty, HashLink } from '@/components/ui';
 import { explorer } from '@/lib/chains';
 import { usd6, tierName } from '@/lib/format';
-import { addresses } from '@/lib/contracts';
+import { addresses, isDeployed } from '@/lib/contracts';
 
 export default function Lookup({ params }: { params: Promise<{ address: string }> }) {
   const { address } = use(params);
@@ -25,6 +25,7 @@ export default function Lookup({ params }: { params: Promise<{ address: string }
         <HashLink href={explorer.sepoliaAddress(address)} label="Sepolia" mono={false} /> · <HashLink href={explorer.cc3Address(address)} label="Creditcoin" mono={false} /> · ledger <HashLink href={explorer.cc3Address(addresses.ledger)} label={addresses.ledger.slice(0, 10) + '…'} />
       </p>
 
+      {!isDeployed && <p className="mt-6 rounded-xl border border-line bg-warm p-4 text-sm text-fg-2">Contracts are not deployed yet on CC3 testnet, so there is nothing to read. See the README quickstart.</p>}
       <div className="mt-10 grid gap-6 lg:grid-cols-3">
         <Card title="Score">
           <ScoreGauge score={p.score} tier={p.tier} pulse={p.pulse} />
@@ -40,7 +41,7 @@ export default function Lookup({ params }: { params: Promise<{ address: string }
           )}
         </Card>
         <Card title="Why">
-          <BreakdownTable b={p.breakdown} loading={p.isLoading} />
+          <BreakdownTable b={p.breakdown} loading={isDeployed && p.isLoading} />
         </Card>
         <Card title="Passport">
           <PassportCard subject={address as Address} hasPassport={p.hasPassport} canMint={p.facts.length > 0} />

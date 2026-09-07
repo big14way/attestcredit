@@ -15,9 +15,10 @@ const rows: Array<[keyof B, string, string]> = [
 
 /** "Your score is 712 because…" — every row is read from CreditLedger.getBreakdown, nothing is computed here. */
 export function BreakdownTable({ b, loading }: { b?: B; loading?: boolean }) {
-  if (loading || !b) {
+  if (loading) {
     return <div className="space-y-2">{rows.map((r) => <Skeleton key={r[0]} className="h-8 w-full" />)}</div>;
   }
+  if (!b) return <p className="text-sm text-fg-2">No breakdown available.</p>;
   return (
     <table className="w-full text-sm">
       <tbody>

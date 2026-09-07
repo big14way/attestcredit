@@ -5,6 +5,8 @@ import { TaglineReveal } from '@/components/TaglineReveal';
 import { LiveStats } from '@/components/LiveStats';
 import { Button } from '@/components/ui';
 import { explorer } from '@/lib/chains';
+import { HeroWords } from '@/components/HeroWords';
+import { PipelineStrip } from '@/components/PipelineStrip';
 
 /*
  * Landing page per .claude/skills/landing-page-design/SKILL.md
@@ -48,8 +50,8 @@ export default function Landing() {
             <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-sm text-fg-2">
               <ShieldCheck size={16} className="text-accent" /> Built on the Attestcoin Protocol · Creditcoin CC3 testnet
             </p>
-            <h1 className="hero-heading max-w-[680px] text-5xl font-semibold md:text-6xl" style={{ lineHeight: 1.05 }}>
-              Your Aave repayment history,<br />proven on Creditcoin
+            <h1 className="max-w-[680px] text-5xl font-semibold md:text-6xl" style={{ lineHeight: 1.05 }}>
+              <HeroWords lines={['Your Aave repayment history,', 'proven on Creditcoin']} wordClass="hero-heading" start={100} step={70} />
             </h1>
             <p className="mt-6 max-w-[680px] text-lg text-fg-2">
               AttestCredit reads a wallet&apos;s borrow, repay and liquidation transactions from Ethereum inside a Creditcoin smart contract. No oracle, no bridge, no indexer. From those proven facts it computes a 300 to 850 score any lender on Creditcoin can query.
@@ -63,14 +65,16 @@ export default function Landing() {
             </p>
           </div>
 
-          <Reveal className="rounded-2xl border border-line bg-surface p-4">
+          <Reveal className="space-y-4">
+            <PipelineStrip />
+            <div className="card-hover rounded-2xl border border-line bg-surface p-4">
             <div className="flex items-center justify-between px-2 pb-3">
               <span className="text-sm font-semibold">Proof trail · {DEMO.slice(0, 6)}…{DEMO.slice(-4)}</span>
               <span className="text-xs text-fg-3">Sepolia → Creditcoin</span>
             </div>
             <ol className="space-y-2">
-              {trail.map((t) => (
-                <li key={t.tx} className="flex items-center gap-3 rounded-xl border border-line bg-raised p-3">
+              {trail.map((t, i) => (
+                <li key={t.tx} className="reveal is-visible flex items-center gap-3 rounded-xl border border-line bg-raised p-3" style={{ transitionDelay: `${300 + i * 120}ms` }}>
                   <Cube size={18} className="shrink-0 text-accent" />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 text-sm">
@@ -84,6 +88,7 @@ export default function Landing() {
               ))}
             </ol>
             <p className="px-2 pt-3 text-xs text-fg-3">Real Aave V3 Pool transactions of the demo wallet on Sepolia. Import them in the app and watch each one verify.</p>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -112,7 +117,7 @@ export default function Landing() {
             [LinkIcon, 'Ten transactions, one proof', 'Batch proofs share a single continuity proof across up to 10 transactions within 1000 blocks. A whole history imports in a few calls.'],
             [MagnifyingGlass, 'A public bureau view', 'Any lender can open /lookup/&lt;address&gt; and see exactly what the contract sees, fact by fact, hash by hash.'],
           ].map(([Icon, title, body], i) => (
-            <Reveal as="li" key={String(title)} delay={i * 80} className="rounded-2xl border border-line bg-surface p-6">
+            <Reveal as="li" key={String(title)} delay={i * 80} className="card-hover rounded-2xl border border-line bg-surface p-6">
               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               {(() => { const I = Icon as any; return <I size={28} className="text-accent" />; })()}
               <h3 className="mt-4 text-xl font-semibold">{String(title)}</h3>
@@ -131,7 +136,7 @@ export default function Landing() {
             ['2 · Attestcoin', 'Creditcoin attests Sepolia block hashes. The worker waits for your block, asks the proof builder for a Merkle inclusion proof plus a continuity proof, and submits it.'],
             ['3 · Creditcoin', 'CreditBureauASC calls the block prover precompile, decodes the receipt, requires success and the real Pool address, and records the fact. The ledger recomputes your score on the spot.'],
           ].map(([t, b], i) => (
-            <Reveal as="li" key={t} delay={i * 100} className="rounded-2xl border border-line bg-surface p-6">
+            <Reveal as="li" key={t} delay={i * 100} className="card-hover rounded-2xl border border-line bg-surface p-6">
               <p className="font-mono text-sm text-accent">{t}</p>
               <p className="mt-3 text-base text-fg-2">{b}</p>
             </Reveal>
@@ -182,7 +187,7 @@ contract MyLender {
         <Reveal><h2 className="max-w-[680px] text-3xl font-semibold">Questions lenders and borrowers ask</h2></Reveal>
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {faq.map(([q, a], i) => (
-            <Reveal as="article" key={q} delay={(i % 2) * 80} className="rounded-2xl border border-line bg-surface p-6">
+            <Reveal as="article" key={q} delay={(i % 2) * 80} className="card-hover rounded-2xl border border-line bg-surface p-6">
               <h3 className="text-lg font-semibold">{q}</h3>
               <p className="mt-2 text-base text-fg-2">{a}</p>
             </Reveal>

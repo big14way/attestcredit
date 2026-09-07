@@ -23,7 +23,7 @@ export function Button({ children, href, onClick, variant = 'primary', disabled,
 
 export function Card({ children, className = '', title, action }: { children: ReactNode; className?: string; title?: ReactNode; action?: ReactNode }) {
   return (
-    <section className={`rounded-2xl border border-line bg-surface p-6 ${className}`}>
+    <section className={`card-hover rounded-2xl border border-line bg-surface p-6 ${className}`}>
       {(title || action) && (
         <header className="mb-4 flex items-center justify-between gap-4">
           {title && <h2 className="text-lg font-semibold">{title}</h2>}
@@ -37,7 +37,7 @@ export function Card({ children, className = '', title, action }: { children: Re
 
 export function Stat({ label, value, hint, loading }: { label: string; value: ReactNode; hint?: ReactNode; loading?: boolean }) {
   return (
-    <div className="rounded-2xl border border-line bg-surface p-6">
+    <div className="card-hover rounded-2xl border border-line bg-surface p-6">
       <p className="text-sm text-fg-2">{label}</p>
       {loading ? <div className="skeleton mt-2 h-9 w-24" /> : <p className="mt-2 font-mono text-3xl font-semibold tabular-nums">{value}</p>}
       {hint && <p className="mt-1 text-xs text-fg-3">{hint}</p>}

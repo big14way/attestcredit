@@ -2,10 +2,11 @@
 import { useStats } from '@/hooks/useProfile';
 import { isDeployed } from '@/lib/contracts';
 import { Stat } from './ui';
+import { CountUp } from './CountUp';
 
 export function LiveStats() {
   const s = useStats();
-  const v = (x?: bigint) => (isDeployed ? (x === undefined ? '–' : x.toLocaleString()) : 'not deployed');
+  const v = (x?: bigint) => (isDeployed ? <CountUp value={x} /> : 'not deployed');
   return (
     <div className="grid gap-4 md:grid-cols-4">
       <Stat label="Subjects with a profile" value={v(s.subjects)} loading={isDeployed && s.isLoading} />

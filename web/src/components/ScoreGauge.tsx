@@ -30,7 +30,7 @@ export function ScoreGauge({ score, tier, pulse = 0, size = 260 }: { score?: num
   };
   const color = tier === undefined ? '#313131' : tierColor(tier);
   return (
-    <figure className={`relative mx-auto ${pulse ? 'animate-[pulse_1s_ease-out_1]' : ''}`} style={{ width: size, height: size }} aria-label={`Credit score ${score ?? 'unknown'}`}>
+    <figure key={pulse} className={`relative mx-auto ${pulse ? 'ring-pulse' : ''}`} style={{ width: size, height: size }} aria-label={`Credit score ${score ?? 'unknown'}`}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         <path d={arc(a0, a1)} stroke="#272727" strokeWidth={12} fill="none" strokeLinecap="round" />
         <path d={arc(a0, a0 + (a1 - a0) * pct)} stroke={color} strokeWidth={12} fill="none" strokeLinecap="round" className="fluid" />

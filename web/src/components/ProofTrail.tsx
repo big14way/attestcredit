@@ -28,8 +28,8 @@ export function ProofTrail({ trails }: { trails: TxTrail[] }) {
   if (trails.length === 0) return null;
   return (
     <ol className="space-y-3">
-      {trails.map((t) => (
-        <li key={t.txHash} className="fluid rounded-xl border border-line bg-raised p-4">
+      {trails.map((t, i) => (
+        <li key={t.txHash} className={`fluid rounded-xl border bg-raised p-4 ${t.stage === 'verified' ? 'border-accent/40' : 'border-line'}`} style={{ animation: `wordrise 800ms cubic-bezier(0.32,0.72,0,1) ${i * 90}ms both` }}>
           <div className="flex flex-wrap items-center gap-3">
             <StageIcon s={t.stage} />
             <span className="text-sm font-semibold">{stageLabel[t.stage]}</span>

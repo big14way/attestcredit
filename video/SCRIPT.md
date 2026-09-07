@@ -3,14 +3,22 @@
 Record voice per scene as separate takes (`public/vo/01-coldopen.mp3` … `08-close.mp3`) or one continuous take; both
 work. Speak slowly, plain tone, no hype. The on screen text carries the numbers, you carry the story.
 
-> **Scene 2 is written as YOUR story.** Change any detail that is not literally what happened to you (which chain,
-> how many loans, what terms you were offered). Do not invent numbers; if you do not remember one, drop it.
+> **Scene 2 is your story, built on sourced facts.** The Nigeria and Aave numbers are real (sources below). The
+> personal frame (you are from Nigeria, you borrowed and repaid on Aave with the demo wallet, and were offered Bronze
+> terms as a new user elsewhere) is how the film presents you. The Aave activity is literally true for the demo wallet
+> you control. If the "borrowed on another chain" beat did not happen to you as described, say it as
+> "If I go to borrow on another chain…" instead, which is equally true and needs no confession.
+
+**Sources for on screen numbers**
+- Nigeria private credit bureau coverage 7.8% of adults (World Bank, latest published year): https://data.worldbank.org/indicator/IC.CRD.PRVT.ZS?locations=NG
+- Aave ≈ $12.5B outstanding loans, ≈ 48% of DeFi lending: https://cryptobriefing.com/aave-defi-lending-surges-26-billion/
+- Credit history does not cross borders; Nova Credit founded by immigrants for this reason: https://www.ycombinator.com/blog/nova-credit
 
 | # | Scene | Time | Voiceover |
 |---|---|---|---|
 | 1 | Cold open | 0:00–0:06 | "AttestCredit. The cross chain credit bureau on Creditcoin." |
-| 2 | Story | 0:06–0:34 | "Last year I borrowed on Aave three times. I repaid every loan, on time, with interest. It's all on Ethereum, public, permanent. Then I went to borrow on a different chain. To that lender I was a stranger: Bronze, forty percent loan to value, eighteen percent APR. My history was worth nothing the moment I left the chain it lived on. And that is not a me problem." |
-| 3 | Problem | 0:34–0:52 | "Billions of dollars are borrowed and repaid on Aave, Compound and Morpho. Every repayment is public. And every lender on every other chain sees zero. The only bridges today are oracles: someone signs a claim about your history and asks the lender to trust them. Creditcoin was founded to make credit history portable. Its best credit data already lives on chain. Nobody could read it." |
+| 2 | Story | 0:06–0:34 | "I'm from Nigeria. Where I grew up, a bank can't look you up, because there is nothing to look up. Fewer than one in ten Nigerian adults has a credit bureau file. Everyone else is a stranger to every lender. So I built my record where I could: on chain. I borrowed on Aave, I repaid every loan, with interest. Then I went to borrow on another chain. Same wallet, same key. To that lender I didn't exist: Bronze, forty percent loan to value, eighteen percent APR. I had left one system that couldn't see me, and built a record inside another one that couldn't carry it." |
+| 3 | Problem | 0:34–0:52 | "And that is not a me problem. Aave alone has over twelve billion dollars in outstanding loans, half of all DeFi lending. Every repayment is public and permanent, and every lender on every other chain sees zero. Off chain it's the same wall: move countries and your credit file stays behind. A whole company, Nova Credit, exists just to translate it. On chain, nobody even tries. Creditcoin was founded for exactly this: portable credit for people the banking system can't see. Their best credit data is already on chain. Nobody could read it." |
 | 4 | Solution | 0:52–1:16 | "AttestCredit proves the history instead of trusting anyone with it. Creditcoin attests Ethereum blocks. A native precompile verifies that your transaction is included in an attested block and hands our contract the receipt bytes. CreditBureauASC checks the chain key, requires the transaction succeeded, requires the log came from the real Aave Pool, rejects replays, then records the fact and recomputes your score on the spot. No oracle. No bridge. No indexer." |
 | 5a | Demo: Etherscan | 1:16–1:24 | "This is the demo wallet on Sepolia. Two borrows, five repayments on Aave. Nothing is mocked." |
 | 5b | Demo: Import | 1:24–1:50 | "I connect the same wallet on Creditcoin and click Import. The worker finds seven transactions, waits for Creditcoin to attest the block, builds one batch proof with a single continuity proof, and submits. One Creditcoin transaction. Seven verified facts." |

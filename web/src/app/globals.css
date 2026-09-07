@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+/* Tokens from src/design/tokens.ts (landing-page-design skill, Part B) */
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, Menlo, monospace;
+
+  --color-bg: #000000;
+  --color-surface: #181818;
+  --color-raised: #1f1f1f;
+  --color-overlay: #272727;
+  --color-line: #313131;
+  --color-warm: #131209;
+
+  --color-fg: #ffffff;
+  --color-fg-2: #9b9b9b;
+  --color-fg-3: #6b6b6b;
+
+  --color-accent: #8af0c8;
+  --color-accent-strong: #5fe3b0;
+  --color-accent-ink: #062a1e;
+
+  --color-bronze: #b87333;
+  --color-silver: #a8b3c4;
+  --color-gold: #f2b632;
+  --color-platinum: #7ee0d6;
+
+  --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: #000000;
+  color: #ffffff;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-wrap: pretty;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+  font-weight: 600;
+}
+
+/* B5: the one place a gradient is allowed — hero heading text, left to right #FFFFFF → #9B9B9B */
+.hero-heading {
+  background: linear-gradient(90deg, #ffffff 0%, #9b9b9b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* B7: fluid motion */
+.fluid {
+  transition-property: all;
+  transition-duration: 700ms;
+  transition-timing-function: var(--ease-fluid);
+}
+
+/* Scroll interpolation: translate-y-16 blur-md opacity-0 → translate-y-0 blur-0 opacity-100 over ≥800ms */
+.reveal {
+  opacity: 0;
+  transform: translateY(4rem);
+  filter: blur(12px);
+  transition: opacity 900ms var(--ease-fluid), transform 900ms var(--ease-fluid), filter 900ms var(--ease-fluid);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* B11: tagline words start muted (~30%) and activate one at a time */
+.tagline-word {
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 700ms var(--ease-fluid);
+}
+.tagline-word.is-on {
+  color: #ffffff;
+}
+
+/* B9: physical feedback on press, visible focus ring */
+.press:active {
+  transform: scale(0.98);
+}
+:focus-visible {
+  outline: 2px solid #8af0c8;
+  outline-offset: 2px;
+}
+
+/* Skeletons shaped like the real layout */
+.skeleton {
+  background: #1f1f1f;
+  border-radius: 0.5rem;
+  animation: pulse 1.6s var(--ease-fluid) infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 8px;
+}
+.skip-link:focus {
+  left: 8px;
+  z-index: 100;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .fluid, .tagline-word { transition: none; }
+  .reveal { opacity: 1; transform: none; filter: none; }
+}
+
+/* Markdown docs */
+.prose-doc { color: #9b9b9b; font-size: 1rem; line-height: 1.5rem; }
+.prose-doc h1 { color: #fff; font-size: 1.875rem; line-height: 2.25rem; margin: 0 0 1rem; }
+.prose-doc h2 { color: #fff; font-size: 1.5rem; line-height: 2rem; margin: 2rem 0 0.75rem; }
+.prose-doc h3 { color: #fff; font-size: 1.25rem; line-height: 1.75rem; margin: 1.5rem 0 0.5rem; }
+.prose-doc p { margin: 0 0 1rem; }
+.prose-doc a { color: #8af0c8; }
+.prose-doc code { font-family: var(--font-mono); font-size: 0.875rem; background: #1f1f1f; padding: 0.125rem 0.25rem; border-radius: 0.25rem; color: #fff; }
+.prose-doc pre { background: #181818; border: 1px solid #313131; border-radius: 1rem; padding: 1rem; overflow-x: auto; margin: 0 0 1rem; }
+.prose-doc pre code { background: transparent; padding: 0; color: #9b9b9b; }
+.prose-doc table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 0 0 1rem; display: block; overflow-x: auto; }
+.prose-doc th, .prose-doc td { border: 1px solid #313131; padding: 0.5rem; text-align: left; vertical-align: top; }
+.prose-doc th { color: #fff; background: #181818; }
+.prose-doc ul, .prose-doc ol { padding-left: 1.5rem; margin: 0 0 1rem; }
+.prose-doc li { margin: 0.25rem 0; }
+.prose-doc strong { color: #fff; }

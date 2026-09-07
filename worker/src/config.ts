@@ -56,7 +56,7 @@ export const config = {
   proverUrl: env('PROVER_URL', 'https://prover.cc3-testnet.creditcoin.network'),
   sepoliaRpcUrl: env('SEPOLIA_RPC_URL', 'https://ethereum-sepolia-rpc.publicnode.com'),
   sepoliaChainKey: Number(env('SEPOLIA_CHAIN_KEY', '1')),
-  cc3ExplorerUrl: env('CC3_EXPLORER_URL', 'https://explorer.cc3-testnet.creditcoin.network'),
+  cc3ExplorerUrl: env('CC3_EXPLORER_URL', 'https://creditcoin-testnet.blockscout.com'),
   privateKey: (): string => env('PRIVATE_KEY'),
   bureauAddress: (): string => process.env.CREDIT_BUREAU_ASC_ADDRESS || loadDeployments()?.creditBureauASC || '',
   ledgerAddress: (): string => process.env.CREDIT_LEDGER_ADDRESS || loadDeployments()?.creditLedger || '',

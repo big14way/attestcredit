@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm';
 export const dynamic = 'force-static';
 
 function read(name: string): string | null {
-  const p = path.join(process.cwd(), '..', 'docs', name);
+  const p = path.join(process.cwd(), 'content', name);
   return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null;
 }
 

@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prebuild": "node scripts/sync-content.mjs",
+    "predev": "node scripts/sync-content.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
@@ -31,5 +33,8 @@
     "eslint-config-next": "15.5.25",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

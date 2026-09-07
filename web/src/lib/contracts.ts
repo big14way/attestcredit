@@ -1,5 +1,5 @@
 import { createPublicClient, http, type Address } from 'viem';
-import deployments from '../../../deployments/cc3-testnet.json';
+import deployments from '../../content/cc3-testnet.json';
 import { cc3Testnet, sepolia } from './chains';
 import { BUREAU_ABI } from '@/abi/bureau';
 import { LEDGER_ABI } from '@/abi/ledger';

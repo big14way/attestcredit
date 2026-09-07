@@ -16,3 +16,4 @@ web/out/
 .DS_Store
 worker/dist/
 deck/*.pdf
+.vercel

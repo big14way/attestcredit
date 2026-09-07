@@ -75,13 +75,17 @@ proof`). The worker groups qualifying transactions greedily into ≤10 per 1000 
 
 ### Measured gas (CC3 testnet)
 
-_To be filled from real testnet runs after deployment (see §6). The worker logs `GAS batch=… gasUsed=… perTx=…` for
-every submission._
+Measured on CC3 testnet on 2026-09-07 (block gas cap 75M). Continuity roots = distance from the nearest attestation
+checkpoint, so single proof cost varies with timing; the batch amortises one continuity proof over every tx.
 
 | Path | Txs | Continuity roots | Gas used | Gas / tx | Creditcoin tx |
 |---|---|---|---|---|---|
-| `executeSingle` | 1 | – | – | – | – |
-| `executeBatch` | – | – | – | – | – |
+| `executeSingle` (Borrow, Sepolia #11654880) | 1 | 21 | 568,788 | 568,788 | [`0xde30309c…`](https://creditcoin-testnet.blockscout.com/tx/0xde30309c29bc6bcf0289eb4366f5be71d08a9123dc2788a0f4c835bf2dcb8810) |
+| `executeSingle` (Repay, Sepolia #11655395) | 1 | 6 | 506,007 | 506,007 | [`0x46c49dc7…`](https://creditcoin-testnet.blockscout.com/tx/0x46c49dc75451c4c7335cf659e66bf113ff37708948e5bbc3f038d7412d6918e3) |
+| `executeBatch` (demo wallet, Sepolia #11655912–#11655947) | **7** | shared | 2,528,055 | **361,150** | [`0x874c8e88…`](https://creditcoin-testnet.blockscout.com/tx/0x874c8e889f653be491ac73c0a98398eda23b4ae76da99e061f9e0344d0a8b929) |
+
+The 7 tx batch cost 36% less per transaction than the cheaper single proof, and 3.4% of the block gas cap in total.
+Each recorded fact also pays for ledger storage and a score recomputation (`ProfileUpdated`), which is included above.
 
 ## 4. Security: what the precompile guarantees, and what we add
 
@@ -108,17 +112,32 @@ every submission._
 
 ## 6. Deployed addresses and verification transactions (CC3 testnet)
 
-_Filled after deployment._
+Deployed 2026-09-07 from `0x3C343AD077983371b29fee386bdBC8a92E934C51` (also the demo wallet). Source of truth:
+[`deployments/cc3-testnet.json`](../deployments/cc3-testnet.json).
 
 | Contract | Address |
 |---|---|
-| CreditBureauASC | – |
-| CreditLedger | – |
-| ScoreEngine | – |
-| CreditPassport | – |
-| TieredLender | – |
-| TestUSD | – |
+| CreditBureauASC | [`0x789f82778A8d9eB6514a457112a563A89F79A2f1`](https://creditcoin-testnet.blockscout.com/address/0x789f82778A8d9eB6514a457112a563A89F79A2f1) |
+| CreditLedger (ICreditOracle) | [`0x211a38792781b2c7a584a96F0e735d56e809fe85`](https://creditcoin-testnet.blockscout.com/address/0x211a38792781b2c7a584a96F0e735d56e809fe85) |
+| ScoreEngine | [`0xcd529F43bBA9be57f3e61Cc5070A7f03F5F23f4a`](https://creditcoin-testnet.blockscout.com/address/0xcd529F43bBA9be57f3e61Cc5070A7f03F5F23f4a) |
+| CreditPassport | [`0x4f330C74c7bd84665722bA0664705e2f2E6080DC`](https://creditcoin-testnet.blockscout.com/address/0x4f330C74c7bd84665722bA0664705e2f2E6080DC) |
+| TieredLender | [`0x199516b47F1ce8C77617b58526ad701bF1f750FA`](https://creditcoin-testnet.blockscout.com/address/0x199516b47F1ce8C77617b58526ad701bF1f750FA) |
+| TestUSD | [`0x4adDFcfa066E0c955bC0347d9565454AD7Ceaae1`](https://creditcoin-testnet.blockscout.com/address/0x4adDFcfa066E0c955bC0347d9565454AD7Ceaae1) |
 
-| Sepolia tx | Event | Creditcoin verification tx |
-|---|---|---|
-| – | – | – |
+End to end verifications (Sepolia transaction → Creditcoin transaction that verified it through `0x…0FD2`):
+
+| Sepolia tx | Event | Subject | Creditcoin verification tx |
+|---|---|---|---|
+| [`0xb8f2b680…`](https://sepolia.etherscan.io/tx/0xb8f2b680d9ecc2c00d31e115ef6c1f6512699e1dc393f2280bf10e104cf05f25) | Borrow USDC | `0x2C56…6A88` | [`0xde30309c…`](https://creditcoin-testnet.blockscout.com/tx/0xde30309c29bc6bcf0289eb4366f5be71d08a9123dc2788a0f4c835bf2dcb8810) (single) |
+| [`0x8673c7e7…`](https://sepolia.etherscan.io/tx/0x8673c7e7438897926a0a7b8c8a0efc212444154a6fd6bd33d16832112c79d5e2) | Repay USDC | `0xb690…46bB` | [`0x46c49dc7…`](https://creditcoin-testnet.blockscout.com/tx/0x46c49dc75451c4c7335cf659e66bf113ff37708948e5bbc3f038d7412d6918e3) (single) |
+| [`0xfa08887b…`](https://sepolia.etherscan.io/tx/0xfa08887b3da3bc237ed9cff1ddf94e572360c6d8fa50f2761d2e6f0c3649bf7b) | Borrow 400 USDC | demo wallet | [`0x874c8e88…`](https://creditcoin-testnet.blockscout.com/tx/0x874c8e889f653be491ac73c0a98398eda23b4ae76da99e061f9e0344d0a8b929) (batch of 7) |
+| [`0xf5c96636…`](https://sepolia.etherscan.io/tx/0xf5c96636e78354f22e7aeb8d6b20c1818cf9e37aa2ce79e6c7d593d6586f2b29) | Repay 150 USDC | demo wallet | same batch |
+| [`0xaa38a4cd…`](https://sepolia.etherscan.io/tx/0xaa38a4cd79ac05f7384a135af7eb085678606ce5df843b423c4a120b16f316a2) | Repay 150 USDC | demo wallet | same batch |
+| [`0x932a808f…`](https://sepolia.etherscan.io/tx/0x932a808f1d6011661f8706d9017c0fb85c984e24a3e52bcf6f2e6c22049e5ff5) | Repay remaining | demo wallet | same batch |
+| [`0xfe4b504e…`](https://sepolia.etherscan.io/tx/0xfe4b504e680f61ac9b31879b2876962a4e74bae6bb92a04be9af3e897e6ed27c) | Borrow 250 USDC | demo wallet | same batch |
+| [`0x20fcb945…`](https://sepolia.etherscan.io/tx/0x20fcb9458aa1a5bd127a4765ea14c432254c22cf6f769ecb8e57463afe3b1392) | Repay 100 USDC | demo wallet | same batch |
+| [`0x9e8c6711…`](https://sepolia.etherscan.io/tx/0x9e8c671192be12faa47c8c1daf3331bac6148bad6489dc7c5c69856f2c966d3e) | Repay remaining | demo wallet | same batch |
+
+Result for the demo wallet: 2 borrows, 5 repays, $650.00 borrowed, $650.002 repaid → score **530 Silver** from proven
+facts alone; **535** after one native TieredLender repayment ([`0xed791155…`](https://creditcoin-testnet.blockscout.com/tx/0xed79115569e8ee270fcc8d07e914af0abfb999df411bf785c197ac19e6559042)).
+Passport minted in [`0x8effb444…`](https://creditcoin-testnet.blockscout.com/tx/0x8effb44428f95df7d0da94f2b9d6cb8f06cd4d157017cc5eb24479cc5e170aca).

@@ -163,7 +163,7 @@ export default function Landing() {
 
 contract MyLender {
   ICreditOracle constant BUREAU =
-    ICreditOracle(/* CreditLedger on CC3 */);
+    ICreditOracle(0x211a38792781b2c7a584a96F0e735d56e809fe85);
 
   function ltvBps(address user) public view returns (uint16) {
     (, uint8 tier) = BUREAU.getScore(user);

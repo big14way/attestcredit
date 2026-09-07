@@ -71,7 +71,7 @@ interface ICreditOracle {
 }
 
 contract MyLender {
-    ICreditOracle public constant BUREAU = ICreditOracle(0x0000000000000000000000000000000000000000); // CreditLedger, see below
+    ICreditOracle public constant BUREAU = ICreditOracle(0x211a38792781b2c7a584a96F0e735d56e809fe85); // CreditLedger, CC3 testnet
 
     function ltvBps(address user) public view returns (uint16) {
         (, uint8 tier) = BUREAU.getScore(user);
@@ -91,14 +91,16 @@ _Filled by `script/Deploy.s.sol` into [`deployments/cc3-testnet.json`](deploymen
 
 | Contract | Address |
 |---|---|
-| ScoreEngine | _pending_ |
-| CreditLedger (ICreditOracle) | _pending_ |
-| CreditBureauASC | _pending_ |
-| CreditPassport | _pending_ |
-| TestUSD | _pending_ |
-| TieredLender | _pending_ |
+| ScoreEngine | [`0xcd529F43bBA9be57f3e61Cc5070A7f03F5F23f4a`](https://creditcoin-testnet.blockscout.com/address/0xcd529F43bBA9be57f3e61Cc5070A7f03F5F23f4a) |
+| CreditLedger (ICreditOracle) | [`0x211a38792781b2c7a584a96F0e735d56e809fe85`](https://creditcoin-testnet.blockscout.com/address/0x211a38792781b2c7a584a96F0e735d56e809fe85) |
+| CreditBureauASC | [`0x789f82778A8d9eB6514a457112a563A89F79A2f1`](https://creditcoin-testnet.blockscout.com/address/0x789f82778A8d9eB6514a457112a563A89F79A2f1) |
+| CreditPassport | [`0x4f330C74c7bd84665722bA0664705e2f2E6080DC`](https://creditcoin-testnet.blockscout.com/address/0x4f330C74c7bd84665722bA0664705e2f2E6080DC) |
+| TestUSD | [`0x4adDFcfa066E0c955bC0347d9565454AD7Ceaae1`](https://creditcoin-testnet.blockscout.com/address/0x4adDFcfa066E0c955bC0347d9565454AD7Ceaae1) |
+| TieredLender | [`0x199516b47F1ce8C77617b58526ad701bF1f750FA`](https://creditcoin-testnet.blockscout.com/address/0x199516b47F1ce8C77617b58526ad701bF1f750FA) |
 
-Verification transactions are listed in [`docs/ATTESTCOIN_INTEGRATION.md`](docs/ATTESTCOIN_INTEGRATION.md).
+Demo wallet with real imported Aave history: [`0x3C343AD077983371b29fee386bdBC8a92E934C51`](https://sepolia.etherscan.io/address/0x3C343AD077983371b29fee386bdBC8a92E934C51) → `/lookup/0x3C343AD077983371b29fee386bdBC8a92E934C51`. Batch verification of its 7 Sepolia transactions: [`0x874c8e88…`](https://creditcoin-testnet.blockscout.com/tx/0x874c8e889f653be491ac73c0a98398eda23b4ae76da99e061f9e0344d0a8b929).
+
+Measured gas and all verification transactions are listed in [`docs/ATTESTCOIN_INTEGRATION.md`](docs/ATTESTCOIN_INTEGRATION.md).
 
 ## Repository
 

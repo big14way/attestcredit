@@ -17,3 +17,6 @@ web/out/
 worker/dist/
 deck/*.pdf
 .vercel
+
+# pitch video source, script and recordings stay private
+video/

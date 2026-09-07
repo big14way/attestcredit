@@ -5,7 +5,8 @@ export type SingleProof = proofProvider.ContinuityResponse;
 export type BatchProof = proofProvider.BatchContinuityResponse;
 
 const builder = new proofProvider.service.ProofBuilder(config.sepoliaChainKey, config.proverUrl);
-const info = new chainInfo.PrecompileChainInfoProvider(cc3);
+// the SDK bundles its own ethers copy; the runtime class is identical, only the nominal type differs
+const info = new chainInfo.PrecompileChainInfoProvider(cc3 as any);
 
 /** Startup guard required by the spec: Sepolia MUST be chainKey 1 on this Creditcoin network. */
 export async function assertSepoliaChainKey(): Promise<void> {

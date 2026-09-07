@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AttestCredit — pitch deck</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  /* Same tokens as web/src/design/tokens.ts: Geist, dark backgrounds, one mint accent, Tailwind type scale */
+  @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+  :root { --bg:#000; --surface:#181818; --raised:#1f1f1f; --line:#313131; --fg:#fff; --fg2:#9b9b9b; --fg3:#6b6b6b; --accent:#8af0c8; --ink:#062a1e; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--fg); font-family: Geist, ui-sans-serif, system-ui, sans-serif; }
+  .slide { width: 1280px; height: 720px; padding: 64px 80px; display:flex; flex-direction:column; justify-content:center; page-break-after: always; position:relative; border-bottom:1px solid var(--line); }
+  .k { font-family: 'Geist Mono', ui-monospace, monospace; }
+  .eyebrow { color: var(--accent); font-size: 14px; line-height:20px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 16px; }
+  h1 { font-size: 60px; line-height: 1.05; font-weight: 600; margin: 0 0 24px; max-width: 900px; }
+  h2 { font-size: 36px; line-height: 40px; font-weight: 600; margin: 0 0 24px; max-width: 900px; }
+  p, li { font-size: 20px; line-height: 28px; color: var(--fg2); margin: 0 0 12px; }
+  .grid { display:grid; gap: 24px; }
+  .g3 { grid-template-columns: repeat(3,1fr); } .g2 { grid-template-columns: repeat(2,1fr); }
+  .card { background: var(--surface); border:1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .card h3 { font-size: 20px; line-height: 28px; margin: 0 0 8px; color: var(--fg); }
+  .card p { font-size: 16px; line-height: 24px; margin: 0; }
+  .big { font-size: 96px; line-height: 1; font-weight: 600; color: var(--accent); }
+  .foot { position:absolute; bottom: 32px; left: 80px; right: 80px; display:flex; justify-content:space-between; color: var(--fg3); font-size: 12px; line-height:16px; }
+  .hero { background: linear-gradient(90deg,#fff 0%,#9b9b9b 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  pre { background: var(--surface); border:1px solid var(--line); border-radius:16px; padding: 24px; font-family:'Geist Mono',monospace; font-size: 15px; line-height: 22px; color: var(--fg2); margin:0; }
+  table { width:100%; border-collapse: collapse; font-size: 16px; line-height: 24px; }
+  th, td { text-align:left; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+  th { color: var(--fg3); font-weight: 500; font-size: 14px; }
+  .pill { display:inline-block; border:1px solid var(--line); border-radius: 9999px; padding: 4px 12px; font-size: 14px; color: var(--fg2); margin-right: 8px; }
+  @page { size: 1280px 720px; margin: 0; }
+  @media print { .slide { border-bottom: none; } }
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <div class="eyebrow">AttestCredit · BUIDL CTC 2026 Fall</div>
+  <h1 class="hero">Your Aave repayment history, proven on Creditcoin</h1>
+  <p style="max-width:760px">The cross chain credit bureau on Creditcoin, powered by the Attestcoin Protocol. No oracle, no bridge, no indexer.</p>
+  <div class="foot"><span>github.com/big14way/attestcredit</span><span>1 / 10</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Problem</div>
+  <h2>Credit history that cannot leave its chain is not credit history</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Trapped</h3><p>Billions borrowed and repaid on Aave, Compound and Morpho every month. Every repayment is public, permanent, and invisible to a lender on any other chain.</p></div>
+    <div class="card"><h3>Untrusted</h3><p>Today the only way to move that history is an oracle or an indexer that someone has to trust. Lenders do not price risk on hearsay.</p></div>
+    <div class="card"><h3>Unbanked</h3><p>Creditcoin's mission is portable credit for people banks cannot see. Their best credit data already lives on chain.</p></div>
+  </div>
+  <div class="foot"><span>AttestCredit</span><span>2 / 10</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Why now</div>
+  <h2>Attestcoin makes a Creditcoin contract able to read Ethereum</h2>
+  <div class="grid g2">
+    <div class="card"><h3>Attestcoin readability is live on CC3</h3><p>The block prover precompile verifies that a specific transaction was included in an attested Ethereum block, and hands the contract the receipt bytes. Batch proofs verify 10 transactions with one continuity proof.</p></div>
+    <div class="card"><h3>Creditcoin has the lenders</h3><p>Millions of credit transactions already recorded on Creditcoin, an ecosystem of lending apps, and a network whose founding purpose is exactly this data.</p></div>
+  </div>
+  <p style="margin-top:24px">AttestCredit is the first project to use Attestcoin for what it was designed for: reading real financial behaviour from another chain, trustlessly.</p>
+  <div class="foot"><span>AttestCredit</span><span>3 / 10</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Product</div>
+  <h2>Import once. Score, passport and terms follow you.</h2>
+  <div class="grid g3">
+    <div class="card"><h3>1 · Ethereum Sepolia</h3><p>You borrow and repay on Aave V3. The Pool emits Borrow, Repay and LiquidationCall with your address in the topics.</p></div>
+    <div class="card"><h3>2 · Attestcoin</h3><p>Creditcoin attests the block. The worker fetches a Merkle inclusion proof plus continuity proof from the proof builder and submits it.</p></div>
+    <div class="card"><h3>3 · Creditcoin</h3><p>CreditBureauASC verifies through 0x…0FD2, decodes the receipt, requires success and the real Pool, records the fact. The ledger recomputes your 300 to 850 score on the spot.</p></div>
+  </div>
+  <div class="foot"><span>AttestCredit</span><span>4 / 10</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Live demo</div>
+  <h2>Real Sepolia transactions become verified facts on Creditcoin</h2>
+  <div class="grid g2">
+    <div class="card"><h3>Proof trail</h3><p class="k">0xfa0888…bf7b · Borrow 400 USDC · #11655912<br>0xf5c966…2b29 · Repay 150 USDC · #11655920<br>0x932a80…5ff5 · Repay 100.003 USDC · #11655943<br>0xfe4b50…d27c · Borrow 250 USDC · #11655944<br>0x9e8c67…6d3e · Repay 150.002 USDC · #11655947</p><p style="margin-top:12px">Seven transactions, one batch, one shared continuity proof.</p></div>
+    <div class="card"><h3>What the judge sees in 60 seconds</h3><p>Click Import → attestation wait → proof built → Creditcoin tx mined → score jumps → Passport mints → /lookup shows what any lender sees → TieredLender terms change with tier.</p></div>
+  </div>
+  <div class="foot"><span>AttestCredit</span><span>5 / 10</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Attestcoin integration depth</div>
+  <h2>Every gap the precompile leaves open is closed in code</h2>
+  <table>
+    <tr><th>Precompile does not</th><th>We do</th><th>Where</th></tr>
+    <tr><td>Check the tx succeeded</td><td>require receiptStatus == 1</td><td class="k">CreditBureauASC.sol:149</td></tr>
+    <tr><td>Know which contract emitted a log</td><td>log.address == Aave Pool</td><td class="k">:174 / :187 / :201</td></tr>
+    <tr><td>Restrict the source chain</td><td>chainKey == 1 before anything</td><td class="k">:75 / :103</td></tr>
+    <tr><td>Prevent replay</td><td>keccak(chainKey ‖ height ‖ txIndex)</td><td class="k">:78 / :111</td></tr>
+    <tr><td>Roll back your state</td><td>all or nothing batches, irrelevant txs consume nothing</td><td class="k">:103–123, :162</td></tr>
+    <tr><td>Tell time</td><td>ledger clock = latest attested height (ChainInfo 0x…0fD3)</td><td class="k">CreditLedger.sol:127</td></tr>
+  </table>
+  <div class="foot"><span>AttestCredit</span><span>6 / 10</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Scoring</div>
+  <h2>Deterministic, on chain, explainable</h2>
+  <div class="grid g2">
+    <pre>base 300
++ min(repays, 40) × 6
++ min(bitlen(repaid USD), 12) × 8
++ clamp(repaid ÷ borrowed, 0, 1) × 80
++ min(weeks since first fact, 24) × 4
++ recency (30 d: 40 · 90 d: 20)
++ min(native repays, 10) × 5
+− liquidations (90, +45 each, +60 recent)
+− defaults × 120
+clamp 300 … 850</pre>
+    <div>
+      <div class="card" style="margin-bottom:16px"><h3>Tiers</h3><p>Bronze &lt;500 · Silver 500–649 · Gold 650–749 · Platinum ≥750</p></div>
+      <div class="card"><h3>Price independent by design</h3><p>Counts, ratio, tenure, recency and liquidations carry the score. Volume uses fixed testnet scales and is secondary. Owner tunable parameters, fuzz tested monotonicity.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>AttestCredit</span><span>7 / 10</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">For lenders</div>
+  <h2>One interface. One call. Five minutes.</h2>
+  <div class="grid g2">
+    <pre>interface ICreditOracle {
+  function getScore(address subject)
+    external view
+    returns (uint16 score, uint8 tier);
+}
+
+(, uint8 tier) = BUREAU.getScore(user);
+if (tier == 3) ltv = 8000; // Platinum
+if (tier == 2) ltv = 7000; // Gold
+if (tier == 1) ltv = 5500; // Silver
+else           ltv = 4000; // Bronze</pre>
+    <div class="card"><h3>TieredLender (demo consumer)</h3><p>CTC collateral, TUSD loans. LTV and APR read live from the oracle at borrow time. Repayments on Creditcoin feed the profile natively, no proof needed. Any Creditcoin lending app can do the same in under 40 lines.</p></div>
+  </div>
+  <div class="foot"><span>AttestCredit</span><span>8 / 10</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Traction plan · business model</div>
+  <h2>Credit infrastructure, not another lending app</h2>
+  <div class="grid g2">
+    <div class="card"><h3>Go to market</h3><p>Nigeria and emerging market stablecoin borrowers who already use Aave; launch alongside PenguinBase; integrate with Credal and the Creditcoin lender ecosystem so a Bronze to Gold move unlocks real terms.</p></div>
+    <div class="card"><h3>Revenue</h3><p>Per query fee for lenders reading the oracle at scale; premium passports (richer attributes, more source chains); enterprise underwriting feeds. Proof submission stays permissionless and free.</p></div>
+  </div>
+  <div class="foot"><span>AttestCredit</span><span>9 / 10</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Team &amp; ask</div>
+  <h2>Attestcoin was built to read credit across chains. This is that.</h2>
+  <div class="grid g2">
+    <div class="card"><h3>Team</h3><p>big14way — smart contracts, Attestcoin integration, worker and app. Shipped in six days on CC3 testnet with 41 passing tests, real Sepolia fixtures and measured gas.</p></div>
+    <div class="card"><h3>Ask</h3><p>Creditcoin Ecosystem Incentive Program support to take AttestCredit to Ethereum mainnet (chain key 3), add Compound and Morpho events, and ship the lender SDK.</p></div>
+  </div>
+  <p style="margin-top:24px" class="k">github.com/big14way/attestcredit</p>
+  <div class="foot"><span>AttestCredit · MIT</span><span>10 / 10</span></div>
+</section>
+
+</body>
+</html>

@@ -6,8 +6,8 @@ Creditcoin's founding mission is portable, verifiable credit history for people 
 
 | | |
 |---|---|
-| Demo video | _coming with the submission_ |
-| Live app | _coming with the submission_ |
+| Live app | https://attestcredit.vercel.app (Vercel) · proof worker API https://worker-production-54d2.up.railway.app/health (Railway) |
+| Demo video | _coming with the submission_ (source in [`video/`](video/), Remotion) |
 | Docs | [`docs/ATTESTCOIN_INTEGRATION.md`](docs/ATTESTCOIN_INTEGRATION.md) · [`docs/SCORING.md`](docs/SCORING.md) · [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) · [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
 | Network | Creditcoin CC3 testnet (chainId 102031) ← Ethereum Sepolia (Attestcoin chain key 1) |
 

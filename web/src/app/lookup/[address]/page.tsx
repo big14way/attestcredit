@@ -10,11 +10,13 @@ import { Card, Empty, HashLink } from '@/components/ui';
 import { explorer } from '@/lib/chains';
 import { usd6, tierName } from '@/lib/format';
 import { addresses, isDeployed } from '@/lib/contracts';
+import { useCc3TxByQuery } from '@/hooks/useCc3Txs';
 
 export default function Lookup({ params }: { params: Promise<{ address: string }> }) {
   const { address } = use(params);
   const valid = isAddress(address);
   const p = useProfile(valid ? (address as Address) : undefined);
+  const txByQuery = useCc3TxByQuery(valid ? (address as Address) : undefined, p.pulse);
   if (!valid) return <div className="mx-auto max-w-3xl px-6 pt-32"><Empty title="Not an address"><p>{address}</p></Empty></div>;
 
   return (
@@ -47,7 +49,7 @@ export default function Lookup({ params }: { params: Promise<{ address: string }
           <PassportCard subject={address as Address} hasPassport={p.hasPassport} canMint={p.facts.length > 0} />
         </Card>
         <Card className="lg:col-span-3" title={`Facts (${p.facts.length})`}>
-          <FactsTable facts={p.facts} loading={p.isLoading} />
+          <FactsTable facts={p.facts} loading={p.isLoading} cc3TxByQuery={txByQuery} />
         </Card>
       </div>
       {p.tier !== undefined && (

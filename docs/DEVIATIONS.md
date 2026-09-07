@@ -32,3 +32,8 @@ Everything not listed here follows the spec as written.
 7. **Design skill installed by file download.** `.claude/skills/landing-page-design/SKILL.md` was fetched over
    HTTPS from the same repository the spec names (a `git clone` into the project directory was blocked by the
    tooling sandbox). Content is identical.
+
+8. **Deployed with `forge create` + `cast send`, not `forge script`.** Foundry's local simulator rejects CC3 block
+   headers (`header validation error: prevrandao not set`, a Substrate/Frontier quirk), so `script/Deploy.s.sol` is
+   kept as the reference deployment order but the live deployment ran each `forge create --legacy` and the role grants
+   with `cast send`. Addresses and tx hashes are in `deployments/cc3-testnet.json`.
